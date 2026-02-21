@@ -158,8 +158,15 @@ fn test_process_payment_success() {
     let event_id = String::from_str(&env, "event_1");
     let tier_id = String::from_str(&env, "tier_1");
 
-    let result_id =
-        client.process_payment(&payment_id, &event_id, &tier_id, &buyer, &usdc_id, &amount, &1);
+    let result_id = client.process_payment(
+        &payment_id,
+        &event_id,
+        &tier_id,
+        &buyer,
+        &usdc_id,
+        &amount,
+        &1,
+    );
     assert_eq!(result_id, payment_id);
 
     // Check escrow balances
@@ -297,10 +304,7 @@ fn test_batch_purchase_success() {
     let escrow_balance = client.get_event_escrow_balance(&event_id);
     let expected_fee = (total_amount * 500) / 10000;
     assert_eq!(escrow_balance.platform_fee, expected_fee);
-    assert_eq!(
-        escrow_balance.organizer_amount,
-        total_amount - expected_fee
-    );
+    assert_eq!(escrow_balance.organizer_amount, total_amount - expected_fee);
 
     // Check individual payment records - check at least first two
     // Check individual payment records - check at least first two
@@ -742,7 +746,9 @@ impl MockEventRegistryWithInventory {
     pub fn increment_inventory(env: Env, _event_id: String, _tier_id: String, quantity: u32) {
         let key = Symbol::new(&env, "supply");
         let current: i128 = env.storage().instance().get(&key).unwrap_or(0);
-        env.storage().instance().set(&key, &(current + quantity as i128));
+        env.storage()
+            .instance()
+            .set(&key, &(current + quantity as i128));
     }
 }
 
@@ -919,7 +925,9 @@ impl MockEventRegistryWithMilestones {
     pub fn increment_inventory(env: Env, _event_id: String, _tier_id: String, quantity: u32) {
         let key = Symbol::new(&env, "supply");
         let current: i128 = env.storage().instance().get(&key).unwrap_or(0);
-        env.storage().instance().set(&key, &(current + quantity as i128));
+        env.storage()
+            .instance()
+            .set(&key, &(current + quantity as i128));
     }
 }
 
