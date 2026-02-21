@@ -40,7 +40,7 @@
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOLZM"
                 },
                 {
-                  "i128": "10000"
+                  "i128": "10000000000"
                 }
               ]
             }
@@ -65,7 +65,7 @@
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM"
                 },
                 {
-                  "i128": "10000"
+                  "i128": "10000000000"
                 },
                 {
                   "u32": 99999
@@ -90,10 +90,10 @@
                   "string": "p1"
                 },
                 {
-                  "string": "e1"
+                  "string": "event_1"
                 },
                 {
-                  "string": "t1"
+                  "string": "tier_1"
                 },
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOLZM"
@@ -102,11 +102,12 @@
                   "address": "CCABDO7UZXYE4W6GVSEGSNNZTKSLFQGKXXQTH6OX7M7GKZ4Z6CUJNGZN"
                 },
                 {
-                  "i128": "10000"
+                  "i128": "10000000000"
                 },
                 {
                   "u32": 1
-                }
+                },
+                "void"
               ]
             }
           },
@@ -236,7 +237,7 @@
                   "symbol": "Balances"
                 },
                 {
-                  "string": "e1"
+                  "string": "event_1"
                 }
               ]
             },
@@ -256,7 +257,7 @@
                       "symbol": "Balances"
                     },
                     {
-                      "string": "e1"
+                      "string": "event_1"
                     }
                   ]
                 },
@@ -268,7 +269,7 @@
                         "symbol": "organizer_amount"
                       },
                       "val": {
-                        "i128": "9750"
+                        "i128": "9750000000"
                       }
                     },
                     {
@@ -276,7 +277,7 @@
                         "symbol": "platform_fee"
                       },
                       "val": {
-                        "i128": "250"
+                        "i128": "250000000"
                       }
                     },
                     {
@@ -355,7 +356,7 @@
                   "symbol": "EventPayments"
                 },
                 {
-                  "string": "e1"
+                  "string": "event_1"
                 }
               ]
             },
@@ -375,7 +376,7 @@
                       "symbol": "EventPayments"
                     },
                     {
-                      "string": "e1"
+                      "string": "event_1"
                     }
                   ]
                 },
@@ -514,7 +515,7 @@
                         "symbol": "amount"
                       },
                       "val": {
-                        "i128": "10000"
+                        "i128": "10000000000"
                       }
                     },
                     {
@@ -544,7 +545,7 @@
                         "symbol": "event_id"
                       },
                       "val": {
-                        "string": "e1"
+                        "string": "event_1"
                       }
                     },
                     {
@@ -552,7 +553,7 @@
                         "symbol": "organizer_amount"
                       },
                       "val": {
-                        "i128": "9750"
+                        "i128": "9750000000"
                       }
                     },
                     {
@@ -568,7 +569,7 @@
                         "symbol": "platform_fee"
                       },
                       "val": {
-                        "i128": "250"
+                        "i128": "250000000"
                       }
                     },
                     {
@@ -588,7 +589,7 @@
                         "symbol": "ticket_tier_id"
                       },
                       "val": {
-                        "string": "t1"
+                        "string": "tier_1"
                       }
                     },
                     {
@@ -1032,7 +1033,7 @@
                         "symbol": "amount"
                       },
                       "val": {
-                        "i128": "10000"
+                        "i128": "10000000000"
                       }
                     },
                     {

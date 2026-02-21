@@ -18,6 +18,8 @@ pub enum TicketPaymentError {
     InsufficientAllowance = 12,
     TransferVerificationFailed = 13,
     ArithmeticError = 14,
+    SelfReferralNotAllowed = 15,
+    PriceMismatch = 16,
 }
 
 impl core::fmt::Display for TicketPaymentError {
@@ -46,6 +48,12 @@ impl core::fmt::Display for TicketPaymentError {
             }
             TicketPaymentError::ArithmeticError => {
                 write!(f, "Arithmetic error during calculation")
+            }
+            TicketPaymentError::SelfReferralNotAllowed => {
+                write!(f, "Self-referral is not allowed")
+            }
+            TicketPaymentError::PriceMismatch => {
+                write!(f, "Price mismatch")
             }
         }
     }
