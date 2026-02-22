@@ -1,7 +1,6 @@
 use crate::types::PaymentStatus;
 use soroban_sdk::{contracttype, Address, BytesN, String};
 
-
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AgoraEvent {

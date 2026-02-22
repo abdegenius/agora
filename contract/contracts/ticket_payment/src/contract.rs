@@ -225,7 +225,8 @@ impl TicketPaymentContract {
         }
 
         // 2. Calculate platform fee (platform_fee_percent is in bps, 10000 = 100%)
-        let total_platform_fee = (effective_total * event_info.platform_fee_percent as i128) / 10000;
+        let total_platform_fee =
+            (effective_total * event_info.platform_fee_percent as i128) / 10000;
         let total_organizer_amount = effective_total - total_platform_fee;
 
         // 3. Transfer tokens to contract (escrow)
