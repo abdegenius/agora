@@ -1,6 +1,7 @@
 use crate::types::PaymentStatus;
 use soroban_sdk::{contracttype, Address, BytesN, String};
 
+
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AgoraEvent {
@@ -10,6 +11,7 @@ pub enum AgoraEvent {
     ContractUpgraded,
     TicketTransferred,
     BulkRefundProcessed,
+    DiscountCodeApplied,
 }
 
 #[contracttype]
@@ -63,5 +65,15 @@ pub struct BulkRefundProcessedEvent {
     pub event_id: String,
     pub refund_count: u32,
     pub total_refunded: i128,
+    pub timestamp: u64,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct DiscountCodeAppliedEvent {
+    pub payment_id: String,
+    pub event_id: String,
+    pub code_hash: BytesN<32>,
+    pub discount_amount: i128,
     pub timestamp: u64,
 }

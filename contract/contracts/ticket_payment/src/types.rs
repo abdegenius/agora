@@ -1,4 +1,4 @@
-use soroban_sdk::{contracttype, Address, String};
+use soroban_sdk::{contracttype, Address, BytesN, String};
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -44,7 +44,9 @@ pub enum DataKey {
     EventRegistry,           // Event Registry contract address
     Initialized,             // Initialization flag
     TokenWhitelist(Address), // token_address -> bool
-    Balances(String),        // event_id -> EventBalance (escrow tracking)
-    TransferFee(String),     // event_id -> transfer_fee amount
-    BulkRefundIndex(String), // event_id -> last processed payment index
+    Balances(String),           // event_id -> EventBalance (escrow tracking)
+    TransferFee(String),        // event_id -> transfer_fee amount
+    BulkRefundIndex(String),    // event_id -> last processed payment index
+    DiscountCodeHash(BytesN<32>), // sha256_hash -> bool (registered)
+    DiscountCodeUsed(BytesN<32>), // sha256_hash -> bool (spent)
 }

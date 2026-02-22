@@ -18,6 +18,8 @@ pub enum TicketPaymentError {
     InsufficientAllowance = 12,
     TransferVerificationFailed = 13,
     ArithmeticError = 14,
+    InvalidDiscountCode = 15,
+    DiscountCodeAlreadyUsed = 16,
 }
 
 impl core::fmt::Display for TicketPaymentError {
@@ -46,6 +48,12 @@ impl core::fmt::Display for TicketPaymentError {
             }
             TicketPaymentError::ArithmeticError => {
                 write!(f, "Arithmetic error during calculation")
+            }
+            TicketPaymentError::InvalidDiscountCode => {
+                write!(f, "Discount code is invalid or not registered")
+            }
+            TicketPaymentError::DiscountCodeAlreadyUsed => {
+                write!(f, "Discount code has already been used")
             }
         }
     }
