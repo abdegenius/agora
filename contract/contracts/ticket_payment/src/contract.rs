@@ -83,6 +83,7 @@ pub struct TicketPaymentContract;
 
 #[contractimpl]
 #[allow(deprecated)]
+#[allow(clippy::too_many_arguments)]
 impl TicketPaymentContract {
     /// Initializes the contract with necessary configurations.
     pub fn initialize(
@@ -160,6 +161,7 @@ impl TicketPaymentContract {
     }
 
     /// Processes a payment for an event ticket.
+    #[allow(clippy::too_many_arguments)]
     pub fn process_payment(
         env: Env,
         payment_id: String,

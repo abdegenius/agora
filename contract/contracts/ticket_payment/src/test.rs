@@ -1410,7 +1410,7 @@ fn test_add_discount_hashes_and_invalid_code_rejected() {
 
     // An unregistered code should be rejected
     let buyer = Address::generate(&env);
-    let amount = 1_000_0000000i128;
+    let amount = 10_000_000_000_i128;
     token::StellarAssetClient::new(&env, &usdc_id).mint(&buyer, &amount);
     token::Client::new(&env, &usdc_id).approve(&buyer, &client.address, &amount, &99999);
 
@@ -1441,7 +1441,7 @@ fn test_process_payment_with_valid_discount_code() {
     client.add_discount_hashes(&event_id, &soroban_sdk::vec![&env, valid_hash]);
 
     let buyer = Address::generate(&env);
-    let full_amount = 1_000_0000000i128;
+    let full_amount = 10_000_000_000_i128;
     let discounted_amount = full_amount * 90 / 100; // 10% off
 
     // Fund with only what the discounted price requires
@@ -1480,7 +1480,7 @@ fn test_discount_code_one_time_use() {
     client.add_discount_hashes(&event_id, &soroban_sdk::vec![&env, valid_hash]);
 
     let buyer = Address::generate(&env);
-    let full_amount = 2_000_0000000i128;
+    let full_amount = 20_000_000_000_i128;
     let discounted = full_amount * 90 / 100;
 
     // Fund enough for two discounted purchases
