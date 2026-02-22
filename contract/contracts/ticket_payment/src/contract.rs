@@ -225,7 +225,7 @@ impl TicketPaymentContract {
         if tier.early_bird_deadline > 0 && current_time > tier.early_bird_deadline {
             let switch_key = Symbol::new(
                 &env,
-                &alloc::format!("ps_{}_{}", event_id, ticket_tier_id).as_str(),
+                alloc::format!("ps_{}_{}", event_id, ticket_tier_id).as_str(),
             );
             let has_switched: bool = env.storage().persistent().get(&switch_key).unwrap_or(false);
             if !has_switched {
