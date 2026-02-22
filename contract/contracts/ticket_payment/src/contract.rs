@@ -177,11 +177,18 @@ impl TicketPaymentContract {
         amount: i128, // price for ONE ticket
         quantity: u32,
         code_preimage: Option<Bytes>,
+        referrer: Option<Address>,
     ) -> Result<String, TicketPaymentError> {
         if !is_initialized(&env) {
             panic!("Contract not initialized");
         }
         buyer_address.require_auth();
+
+        if let Some(ref ref_addr) = referrer {
+            if ref_addr == &buyer_address {
+                return Err(TicketPaymentError::SelfReferralNotAllowed);
+            }
+        }
 
         if amount <= 0 {
             panic!("Amount must be positive");
@@ -269,9 +276,17 @@ impl TicketPaymentContract {
         }
 
         // 2. Calculate platform fee (platform_fee_percent is in bps, 10000 = 100%)
-        let total_platform_fee =
+        let mut total_platform_fee =
             (effective_total * event_info.platform_fee_percent as i128) / 10000;
         let total_organizer_amount = effective_total - total_platform_fee;
+
+        let referral_reward = if referrer.is_some() {
+            let reward = (total_platform_fee * 20) / 100; // 20%
+            total_platform_fee -= reward;
+            reward
+        } else {
+            0
+        };
 
         // 3. Transfer tokens to contract (escrow)
         let token_client = token::Client::new(&env, &token_address);
@@ -298,6 +313,13 @@ impl TicketPaymentContract {
         let balance_after = token_client.balance(&contract_address);
         if balance_after - balance_before != effective_total {
             return Err(TicketPaymentError::TransferVerificationFailed);
+        }
+
+        // Transfer referral reward if applicable
+        if let Some(ref ref_addr) = referrer {
+            if referral_reward > 0 {
+                token_client.transfer(&contract_address, ref_addr, &referral_reward);
+            }
         }
 
         // 4. Update escrow balances
