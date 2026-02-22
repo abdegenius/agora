@@ -20,6 +20,7 @@ pub enum TicketPaymentError {
     ArithmeticError = 14,
     SelfReferralNotAllowed = 15,
     PriceMismatch = 16,
+    InvalidPrice = 17,
 }
 
 impl core::fmt::Display for TicketPaymentError {
@@ -54,6 +55,12 @@ impl core::fmt::Display for TicketPaymentError {
             }
             TicketPaymentError::PriceMismatch => {
                 write!(f, "Price mismatch")
+            }
+            TicketPaymentError::InvalidPrice => {
+                write!(
+                    f,
+                    "Paid amount does not match the active price for this tier"
+                )
             }
         }
     }
