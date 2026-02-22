@@ -1,3 +1,4 @@
+extern crate alloc;
 use crate::storage::{
     add_payment_to_buyer_index, add_token_to_whitelist, get_admin, get_event_balance,
     get_event_registry, get_payment, get_platform_wallet, get_transfer_fee, is_initialized,
@@ -10,10 +11,10 @@ use crate::{
     error::TicketPaymentError,
     events::{
         AgoraEvent, ContractUpgraded, InitializationEvent, PaymentProcessedEvent,
-        PaymentStatusChangedEvent, TicketTransferredEvent,
+        PaymentStatusChangedEvent, PriceSwitchedEvent, TicketTransferredEvent,
     },
 };
-use soroban_sdk::{contract, contractimpl, token, Address, BytesN, Env, String};
+use soroban_sdk::{contract, contractimpl, token, Address, BytesN, Env, String, Symbol};
 
 // Event Registry interface
 pub mod event_registry {
@@ -46,6 +47,8 @@ pub mod event_registry {
     pub struct TicketTier {
         pub name: String,
         pub price: i128,
+        pub early_bird_price: i128,
+        pub early_bird_deadline: u64,
         pub tier_limit: i128,
         pub current_sold: i128,
         pub is_refundable: bool,
@@ -200,6 +203,43 @@ impl TicketPaymentContract {
 
         if !event_info.is_active {
             return Err(TicketPaymentError::EventInactive);
+        }
+
+        let tier = event_info
+            .tiers
+            .get(ticket_tier_id.clone())
+            .ok_or(TicketPaymentError::TierNotFound)?;
+
+        let current_time = env.ledger().timestamp();
+        let mut active_price = tier.price;
+
+        if tier.early_bird_deadline > 0 && current_time <= tier.early_bird_deadline {
+            active_price = tier.early_bird_price;
+        }
+
+        if amount != active_price {
+            return Err(TicketPaymentError::InvalidPrice);
+        }
+
+        // Check if we just transitioned from early bird to standard
+        if tier.early_bird_deadline > 0 && current_time > tier.early_bird_deadline {
+            let switch_key = Symbol::new(
+                &env,
+                &alloc::format!("ps_{}_{}", event_id, ticket_tier_id).as_str(),
+            );
+            let has_switched: bool = env.storage().persistent().get(&switch_key).unwrap_or(false);
+            if !has_switched {
+                env.storage().persistent().set(&switch_key, &true);
+                env.events().publish(
+                    (AgoraEvent::PriceSwitched,),
+                    PriceSwitchedEvent {
+                        event_id: event_id.clone(),
+                        tier_id: ticket_tier_id.clone(),
+                        new_price: tier.price,
+                        timestamp: current_time,
+                    },
+                );
+            }
         }
 
         // 2. Calculate platform fee (platform_fee_percent is in bps, 10000 = 100%)

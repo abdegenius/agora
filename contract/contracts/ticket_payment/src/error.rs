@@ -18,6 +18,7 @@ pub enum TicketPaymentError {
     InsufficientAllowance = 12,
     TransferVerificationFailed = 13,
     ArithmeticError = 14,
+    InvalidPrice = 15,
 }
 
 impl core::fmt::Display for TicketPaymentError {
@@ -46,6 +47,12 @@ impl core::fmt::Display for TicketPaymentError {
             }
             TicketPaymentError::ArithmeticError => {
                 write!(f, "Arithmetic error during calculation")
+            }
+            TicketPaymentError::InvalidPrice => {
+                write!(
+                    f,
+                    "Paid amount does not match the active price for this tier"
+                )
             }
         }
     }
