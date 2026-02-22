@@ -1501,6 +1501,8 @@ fn test_price_switched_event_emitted_exactly_once() {
             "PriceSwitched should be emitted EXACTLY once"
         );
     }
+}
+
 #[test]
 fn test_bulk_refund_success() {
     let env = Env::default();
@@ -1513,28 +1515,31 @@ fn test_bulk_refund_success() {
     let buyer2 = Address::generate(&env);
     let event_id = String::from_str(&env, "event_1");
     let tier_id = String::from_str(&env, "tier_1");
+    let ticket_price = 1000_0000000i128; // matches MockEventRegistry tier price
 
     // Process two payments
-    usdc_token.mint(&buyer1, &1000);
-    token::Client::new(&env, &usdc_id).approve(&buyer1, &client.address, &1000, &9999);
+    usdc_token.mint(&buyer1, &ticket_price);
+    token::Client::new(&env, &usdc_id).approve(&buyer1, &client.address, &ticket_price, &9999);
     client.process_payment(
         &String::from_str(&env, "p1"),
         &event_id,
         &tier_id,
         &buyer1,
         &usdc_id,
-        &1000,
+        &ticket_price,
+        &1,
     );
 
-    usdc_token.mint(&buyer2, &1000);
-    token::Client::new(&env, &usdc_id).approve(&buyer2, &client.address, &1000, &9999);
+    usdc_token.mint(&buyer2, &ticket_price);
+    token::Client::new(&env, &usdc_id).approve(&buyer2, &client.address, &ticket_price, &9999);
     client.process_payment(
         &String::from_str(&env, "p2"),
         &event_id,
         &tier_id,
         &buyer2,
         &usdc_id,
-        &1000,
+        &ticket_price,
+        &1,
     );
 
     // Confirm them
@@ -1552,8 +1557,8 @@ fn test_bulk_refund_success() {
     assert_eq!(count, 2);
 
     // Check final balances
-    assert_eq!(token::Client::new(&env, &usdc_id).balance(&buyer1), 1000);
-    assert_eq!(token::Client::new(&env, &usdc_id).balance(&buyer2), 1000);
+    assert_eq!(token::Client::new(&env, &usdc_id).balance(&buyer1), ticket_price);
+    assert_eq!(token::Client::new(&env, &usdc_id).balance(&buyer2), ticket_price);
 
     // Check statuses
     assert_eq!(
@@ -1582,6 +1587,7 @@ fn test_bulk_refund_batching() {
 
     let event_id = String::from_str(&env, "event_1");
     let tier_id = String::from_str(&env, "tier_1");
+    let ticket_price = 1000_0000000i128; // matches MockEventRegistry tier price
 
     // Process 3 payments
     let pids = [
@@ -1592,9 +1598,9 @@ fn test_bulk_refund_batching() {
 
     for pid in pids.iter() {
         let buyer = Address::generate(&env);
-        usdc_token.mint(&buyer, &1000);
-        token::Client::new(&env, &usdc_id).approve(&buyer, &client.address, &1000, &9999);
-        client.process_payment(pid, &event_id, &tier_id, &buyer, &usdc_id, &1000);
+        usdc_token.mint(&buyer, &ticket_price);
+        token::Client::new(&env, &usdc_id).approve(&buyer, &client.address, &ticket_price, &9999);
+        client.process_payment(pid, &event_id, &tier_id, &buyer, &usdc_id, &ticket_price, &1);
         client.confirm_payment(pid, &String::from_str(&env, "h"));
     }
 

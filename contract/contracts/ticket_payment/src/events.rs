@@ -64,7 +64,11 @@ pub struct PriceSwitchedEvent {
     pub event_id: String,
     pub tier_id: String,
     pub new_price: i128,
+    pub timestamp: u64,
 }
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct BulkRefundProcessedEvent {
     pub event_id: String,
     pub refund_count: u32,
