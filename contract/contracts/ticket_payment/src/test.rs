@@ -1557,8 +1557,14 @@ fn test_bulk_refund_success() {
     assert_eq!(count, 2);
 
     // Check final balances
-    assert_eq!(token::Client::new(&env, &usdc_id).balance(&buyer1), ticket_price);
-    assert_eq!(token::Client::new(&env, &usdc_id).balance(&buyer2), ticket_price);
+    assert_eq!(
+        token::Client::new(&env, &usdc_id).balance(&buyer1),
+        ticket_price
+    );
+    assert_eq!(
+        token::Client::new(&env, &usdc_id).balance(&buyer2),
+        ticket_price
+    );
 
     // Check statuses
     assert_eq!(
@@ -1600,7 +1606,15 @@ fn test_bulk_refund_batching() {
         let buyer = Address::generate(&env);
         usdc_token.mint(&buyer, &ticket_price);
         token::Client::new(&env, &usdc_id).approve(&buyer, &client.address, &ticket_price, &9999);
-        client.process_payment(pid, &event_id, &tier_id, &buyer, &usdc_id, &ticket_price, &1);
+        client.process_payment(
+            pid,
+            &event_id,
+            &tier_id,
+            &buyer,
+            &usdc_id,
+            &ticket_price,
+            &1,
+        );
         client.confirm_payment(pid, &String::from_str(&env, "h"));
     }
 

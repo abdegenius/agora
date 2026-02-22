@@ -11,9 +11,9 @@ use crate::types::{Payment, PaymentStatus};
 use crate::{
     error::TicketPaymentError,
     events::{
-        AgoraEvent, BulkRefundProcessedEvent, PriceSwitchedEvent, ContractUpgraded, 
-        InitializationEvent, PaymentProcessedEvent, PaymentStatusChangedEvent, 
-        TicketTransferredEvent
+        AgoraEvent, BulkRefundProcessedEvent, ContractUpgraded, InitializationEvent,
+        PaymentProcessedEvent, PaymentStatusChangedEvent, PriceSwitchedEvent,
+        TicketTransferredEvent,
     },
 };
 use soroban_sdk::{contract, contractimpl, token, Address, BytesN, Env, String, Symbol};
