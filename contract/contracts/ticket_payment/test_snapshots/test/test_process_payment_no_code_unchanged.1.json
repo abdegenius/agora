@@ -41,7 +41,7 @@
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARQG5"
                 },
                 {
-                  "i128": "5000000000"
+                  "i128": "10000000000"
                 }
               ]
             }
@@ -66,7 +66,7 @@
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
                 },
                 {
-                  "i128": "5000000000"
+                  "i128": "10000000000"
                 },
                 {
                   "u32": 99999
@@ -103,7 +103,7 @@
                   "address": "CDLDVFKHEZ2RVB3NG4UQA4VPD3TSHV6XMHXMHP2BSGCJ2IIWVTOHGDSG"
                 },
                 {
-                  "i128": "5000000000"
+                  "i128": "10000000000"
                 },
                 {
                   "u32": 1
@@ -311,7 +311,7 @@
                         "symbol": "organizer_amount"
                       },
                       "val": {
-                        "i128": "4750000000"
+                        "i128": "9500000000"
                       }
                     },
                     {
@@ -319,7 +319,7 @@
                         "symbol": "platform_fee"
                       },
                       "val": {
-                        "i128": "250000000"
+                        "i128": "500000000"
                       }
                     },
                     {
@@ -557,7 +557,7 @@
                         "symbol": "amount"
                       },
                       "val": {
-                        "i128": "5000000000"
+                        "i128": "10000000000"
                       }
                     },
                     {
@@ -595,7 +595,7 @@
                         "symbol": "organizer_amount"
                       },
                       "val": {
-                        "i128": "4750000000"
+                        "i128": "9500000000"
                       }
                     },
                     {
@@ -611,7 +611,7 @@
                         "symbol": "platform_fee"
                       },
                       "val": {
-                        "i128": "250000000"
+                        "i128": "500000000"
                       }
                     },
                     {
@@ -1043,7 +1043,7 @@
                         "symbol": "amount"
                       },
                       "val": {
-                        "i128": "5000000000"
+                        "i128": "10000000000"
                       }
                     },
                     {

@@ -90,10 +90,10 @@
                   "string": "p1"
                 },
                 {
-                  "string": "e1"
+                  "string": "event_1"
                 },
                 {
-                  "string": "t1"
+                  "string": "tier_1"
                 },
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOLZM"
@@ -237,7 +237,7 @@
                   "symbol": "Balances"
                 },
                 {
-                  "string": "e1"
+                  "string": "event_1"
                 }
               ]
             },
@@ -257,7 +257,7 @@
                       "symbol": "Balances"
                     },
                     {
-                      "string": "e1"
+                      "string": "event_1"
                     }
                   ]
                 },
@@ -356,7 +356,7 @@
                   "symbol": "EventPayments"
                 },
                 {
-                  "string": "e1"
+                  "string": "event_1"
                 }
               ]
             },
@@ -376,7 +376,7 @@
                       "symbol": "EventPayments"
                     },
                     {
-                      "string": "e1"
+                      "string": "event_1"
                     }
                   ]
                 },
@@ -545,7 +545,7 @@
                         "symbol": "event_id"
                       },
                       "val": {
-                        "string": "e1"
+                        "string": "event_1"
                       }
                     },
                     {
@@ -589,7 +589,7 @@
                         "symbol": "ticket_tier_id"
                       },
                       "val": {
-                        "string": "t1"
+                        "string": "tier_1"
                       }
                     },
                     {

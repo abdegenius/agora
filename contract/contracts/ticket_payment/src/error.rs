@@ -20,6 +20,7 @@ pub enum TicketPaymentError {
     ArithmeticError = 14,
     InvalidDiscountCode = 15,
     DiscountCodeAlreadyUsed = 16,
+    InvalidPrice = 17,
 }
 
 impl core::fmt::Display for TicketPaymentError {
@@ -54,6 +55,12 @@ impl core::fmt::Display for TicketPaymentError {
             }
             TicketPaymentError::DiscountCodeAlreadyUsed => {
                 write!(f, "Discount code has already been used")
+            }
+            TicketPaymentError::InvalidPrice => {
+                write!(
+                    f,
+                    "Paid amount does not match the active price for this tier"
+                )
             }
         }
     }
