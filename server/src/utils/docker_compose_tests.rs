@@ -21,11 +21,8 @@ mod tests {
     #[tokio::test]
     async fn test_compose_has_postgres_service() {
         let compose = load_compose();
-        let services = compose["services"]
-            .as_mapping()
-            .expect("services section should exist");
         assert!(
-            services.contains_key(&Value::String("postgres".into())),
+            compose["services"]["postgres"].is_mapping(),
             "services should contain a 'postgres' entry"
         );
     }
@@ -42,13 +39,10 @@ mod tests {
     #[tokio::test]
     async fn test_postgres_env_vars_are_set() {
         let compose = load_compose();
-        let env = &compose["services"]["postgres"]["environment"];
-        let env_map = env.as_mapping().expect("environment should be a mapping");
-
         let required_keys = ["POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB"];
         for key in &required_keys {
             assert!(
-                env_map.contains_key(&Value::String((*key).into())),
+                compose["services"]["postgres"]["environment"][key].is_string(),
                 "environment should contain {key}"
             );
         }
@@ -104,8 +98,6 @@ mod tests {
 
     #[tokio::test]
     async fn test_database_url_matches_compose_defaults() {
-        // Verify the default DATABASE_URL in .env.example is consistent
-        // with the credentials defined in docker-compose.yml
         let compose = load_compose();
         let env = &compose["services"]["postgres"]["environment"];
         let user = env["POSTGRES_USER"].as_str().unwrap();
