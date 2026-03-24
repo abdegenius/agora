@@ -166,10 +166,7 @@ impl EventRegistry {
     }
 
     /// Adds a token address to the payment token whitelist. Only callable by the administrator.
-    pub fn add_to_token_whitelist(
-        env: Env,
-        token: Address,
-    ) -> Result<(), EventRegistryError> {
+    pub fn add_to_token_whitelist(env: Env, token: Address) -> Result<(), EventRegistryError> {
         let admin = storage::get_admin(&env).ok_or(EventRegistryError::NotInitialized)?;
         admin.require_auth();
         validate_address(&env, &token)?;
@@ -178,10 +175,7 @@ impl EventRegistry {
     }
 
     /// Removes a token address from the payment token whitelist. Only callable by the administrator.
-    pub fn remove_from_token_whitelist(
-        env: Env,
-        token: Address,
-    ) -> Result<(), EventRegistryError> {
+    pub fn remove_from_token_whitelist(env: Env, token: Address) -> Result<(), EventRegistryError> {
         let admin = storage::get_admin(&env).ok_or(EventRegistryError::NotInitialized)?;
         admin.require_auth();
         storage::remove_from_token_whitelist(&env, &token);
