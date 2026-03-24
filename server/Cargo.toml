@@ -32,3 +32,6 @@ rust_decimal = { version = "1.33", features = ["db-postgres"] }
 thiserror = "1.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tower = { version = "0.4", features = ["full"] }
