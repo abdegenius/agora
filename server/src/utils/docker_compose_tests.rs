@@ -1,9 +1,8 @@
 #[cfg(test)]
 mod tests {
-    use serde_yaml::Value;
     use std::fs;
 
-    fn load_compose() -> Value {
+    fn load_compose() -> serde_yaml::Value {
         let content = fs::read_to_string("docker-compose.yml")
             .expect("docker-compose.yml should exist in the server directory");
         serde_yaml::from_str(&content).expect("docker-compose.yml should be valid YAML")
@@ -39,20 +38,10 @@ mod tests {
     #[tokio::test]
     async fn test_postgres_env_vars_are_set() {
         let compose = load_compose();
-<<<<<<< HEAD
-        let env = &compose["services"]["postgres"]["environment"];
-        let env_map = env.as_mapping().expect("environment should be a mapping");
-
-        let required_keys = ["POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB"];
-        for key in &required_keys {
-            assert!(
-                env_map.contains_key(&Value::String((*key).into())),
-=======
         let required_keys = ["POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB"];
         for key in &required_keys {
             assert!(
                 compose["services"]["postgres"]["environment"][key].is_string(),
->>>>>>> 94b8aa9c34573b5ae6440b80c45bdc01d2298230
                 "environment should contain {key}"
             );
         }
@@ -108,11 +97,6 @@ mod tests {
 
     #[tokio::test]
     async fn test_database_url_matches_compose_defaults() {
-<<<<<<< HEAD
-        // Verify the default DATABASE_URL in .env.example is consistent
-        // with the credentials defined in docker-compose.yml
-=======
->>>>>>> 94b8aa9c34573b5ae6440b80c45bdc01d2298230
         let compose = load_compose();
         let env = &compose["services"]["postgres"]["environment"];
         let user = env["POSTGRES_USER"].as_str().unwrap();
