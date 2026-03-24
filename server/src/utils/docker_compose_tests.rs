@@ -12,13 +12,18 @@ mod tests {
     #[tokio::test]
     async fn test_compose_file_exists_and_is_valid_yaml() {
         let compose = load_compose();
-        assert!(compose.is_mapping(), "docker-compose.yml root should be a mapping");
+        assert!(
+            compose.is_mapping(),
+            "docker-compose.yml root should be a mapping"
+        );
     }
 
     #[tokio::test]
     async fn test_compose_has_postgres_service() {
         let compose = load_compose();
-        let services = compose["services"].as_mapping().expect("services section should exist");
+        let services = compose["services"]
+            .as_mapping()
+            .expect("services section should exist");
         assert!(
             services.contains_key(&Value::String("postgres".into())),
             "services should contain a 'postgres' entry"
@@ -84,8 +89,13 @@ mod tests {
         let volumes = compose["services"]["postgres"]["volumes"]
             .as_sequence()
             .expect("postgres volumes should be a sequence");
-        assert!(!volumes.is_empty(), "postgres should have at least one volume mount");
-        let vol_str = volumes[0].as_str().expect("volume entry should be a string");
+        assert!(
+            !volumes.is_empty(),
+            "postgres should have at least one volume mount"
+        );
+        let vol_str = volumes[0]
+            .as_str()
+            .expect("volume entry should be a string");
         assert!(
             vol_str.contains("/var/lib/postgresql/data"),
             "volume should mount postgres data directory"
@@ -103,8 +113,7 @@ mod tests {
         let db = env["POSTGRES_DB"].as_str().unwrap();
 
         let expected_url = format!("postgres://{}:{}@localhost:5432/{}", user, password, db);
-        let env_example = fs::read_to_string(".env.example")
-            .expect(".env.example should exist");
+        let env_example = fs::read_to_string(".env.example").expect(".env.example should exist");
 
         assert!(
             env_example.contains(&expected_url),
